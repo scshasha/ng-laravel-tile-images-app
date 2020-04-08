@@ -4,7 +4,7 @@
 
 * [Angular work environment](https://angular.io/guide/setup-local)
 * [Laravel work environment](https://laravel.com/docs/7.x)
-* [Dev Desktop / Docker Toolbox](https://laravel.com/docs/7.x) *(Optional)*
+* [Dev Desktop / Docker Toolbox](https://www.docker.com/products/docker-desktop) *(Optional)*
 
 ## Setup
 
