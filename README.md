@@ -63,7 +63,7 @@ DB migrations. Run:
 
 
 ### With Docker (Dev Desktop / Toolbox)
-The following setup is if you intend to run the Laravel api on a Doker setup.
+The following setup is if you intend to run the Laravel api on a Docker setup.
 
 #### Essential containers used:
 ```
