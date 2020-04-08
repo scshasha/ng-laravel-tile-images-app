@@ -1,0 +1,28 @@
+
+<nav class="navbar navbar-expand-md bg-light navbar-light">
+  <a class="navbar-brand" href="#">Tile Images</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
+    aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="toolbar" role="banner">
+  	<div class="setting-layout" (click)="setSelectedayout(1)">
+  		<span class="one-col-layout custom-icons"></span>
+  	</div>
+
+  	<div class="setting-layout" (click)="setSelectedayout(2)">
+  		<span class="two-col-layout custom-icons"></span>
+  	</div>
+
+  	<div class="setting-layout" (click)="setSelectedayout(3)">
+  		<span class="three-col-layout custom-icons"></span>
+  	</div>
+
+  	<button class="btn btn-save" (click)="upload($event)">Save images</button>
+
+<!-- 
+    <a mat-raised-button="" class="mat-focus-indicator docs-button mat-raised-button mat-button-base" aria-disabled="false" href="#"> <span class="mat-button-wrapper">Save Images</span><div matripple="" class="mat-ripple mat-button-ripple"></div><div class="mat-button-focus-overlay"></div>
+    </a> -->
+  </div>
+
+</nav>

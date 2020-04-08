@@ -1,0 +1,72 @@
+@import '../sass/main.scss';
+
+
+
+$color_1: #eee;
+$color_2: #444;
+$color_3: white;
+$background_color_1: brown;
+$background_color_2: #1976d2;
+
+
+		.col-md-4.inline-block {
+			width: 361px;
+    		display: inline-block;
+    		margin-right: 5px;
+		}
+
+		a {
+			color: $color_1;
+		}
+		.settings-layout {
+			display: inline-block;
+			align-items: center;
+			text-align: center;
+			background: #eee;
+			margin-right: 20px;
+			color: $color_2;
+			padding: 10px 20px;
+			cursor: pointer;
+		}
+		.tile {
+			background-color: $background_color_1;
+		}
+		.ng-draggable {
+			cursor: grab;
+		}
+		.ng-dragging {
+			cursor: grabbing;
+		}
+		h1 {
+			margin: 8px 0;
+		}
+		h2 {
+			margin: 8px 0;
+		}
+		h3 {
+			margin: 8px 0;
+		}
+		h4 {
+			margin: 8px 0;
+		}
+		h5 {
+			margin: 8px 0;
+		}
+		h6 {
+			margin: 8px 0;
+		}
+		p {
+			margin: 0;
+		}
+		.spacer {
+			flex: 1;
+		}
+		
+img.img.text-center.rounded-sm {
+ 
+}
+
+input[type="file"]:after,input[type="file"] {
+    border: 1px dotted #999;
+    font-size: 10px;
+}

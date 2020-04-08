@@ -1,0 +1,57 @@
+@import '../../../sass/main.scss';
+
+
+
+nav {
+	margin-bottom: 20px;
+
+	& .nav-item{
+	    padding:2px;
+	    margin-left: 7px;
+	}
+
+	& .toolbar {
+		position: relative;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 60px;
+		display: flex;
+		align-items: center;
+
+		& .btn {
+			font-weight: 500;
+			border-color: #212529;
+			background-color: #212529;
+			color: #eeeeee;
+		}
+
+		& .setting-layout {
+			text-align: center;
+			margin-right: 10px;
+			cursor: pointer;
+
+			& .custom-icons {
+				display: block;
+			    width: 45px;
+			    height: 30px;
+			    background-repeat: none;
+			    background-size: contain;
+			}
+
+			& .one-col-layout {
+				background-image: url('/assets/images/01-layout.svg'); 
+			}
+
+			& .two-col-layout {
+				background-image: url('/assets/images/02-layout.svg'); 
+			}
+
+			& .three-col-layout {
+				background-image: url('/assets/images/03-layout.svg'); 
+			}
+		}
+	}
+	
+}
+
