@@ -1,0 +1,66 @@
+version: "3"
+
+services:
+  mariadb:
+    image: wodby/mariadb:$MARIADB_TAG
+    container_name: "mariadb"
+    stop_grace_period: 30s
+    environment:
+      MYSQL_ROOT_PASSWORD: $DB_ROOT_PASSWORD
+      MYSQL_DATABASE: $DB_NAME
+      MYSQL_USER: $DB_USER
+      MYSQL_PASSWORD: $DB_PASSWORD
+  php:
+    image: wodby/php:$PHP_TAG
+    container_name: "php"
+    environment:
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      DB_HOST: $DB_HOST
+      DB_USER: $DB_USER
+      DB_PASSWORD: $DB_PASSWORD
+      DB_NAME: $DB_NAME
+      PHP_FPM_USER: wodby
+      PHP_FPM_GROUP: wodby
+    volumes:
+      - ./app/html:/var/www/html
+  nginx:
+    image: wodby/nginx:$NGINX_TAG
+    container_name: "nginx"
+    depends_on:
+      - php
+    environment:
+      NGINX_STATIC_OPEN_FILE_CACHE: "off"
+      NGINX_ERROR_LOG_LEVEL: debug
+      NGINX_BACKEND_HOST: php
+      NGINX_VHOST_PRESET: php
+      NGINX_SERVER_ROOT: /var/www/html/public
+    ports:
+      - "8002:80"
+      - "443:443"
+    volumes:
+      - ./app/html:/var/www/html
+    labels:
+      - "traefik.http.routers.nginx.rule=Host(`${PROJECT_BASE_URL}`)"
+  mailhog:
+    image: mailhog/mailhog
+    container_name: "mailhog"
+    labels:
+      - "traefik.http.services.mailhog.loadbalancer.server.port=8025"
+      - "traefik.http.routers.mailhog.rule=Host(`mailhog.${PROJECT_BASE_URL}`)"
+  portainer:
+    image: portainer/portainer
+    container_name: "portainer"
+    command: --no-auth -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+     - "traefik.http.routers.portainer.rule=Host(`portainer.${PROJECT_BASE_URL}`)"
+
+  traefik:
+    image: traefik:v2.0
+    container_name: "traefik"
+    command: --api.insecure=true --providers.docker
+    ports:
+      - '8000:80'
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
