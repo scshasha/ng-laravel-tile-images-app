@@ -35,19 +35,27 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         // Check if we have an image to proceed with.
-        if ($request->hasFile('image')) {
+
+        // return response()->json(['res' => $request->file("file")]);
+
+
+        if ($request->hasFile('file')) {
 
             $image = new Image();
 
-            $file = $request->file("image");
+            $file = $request->file("file");
             $ext   = $file->getClientOriginalExtension();
 
             $filename    = sprintf('%s-%s-%s.',date('His'), time(), $ext);
             $file->move('uploads/'.date("Y-m-d")."/", $filename);
 
 
-            $image->name = str_replace(".{$ext}", "", $file->getOriginalName());
+             // = str_replace(".{$ext}", "", $file->getOriginalName());
+            $image->name = $filename;
             $image->image = sprintf('uploads/%s/%s/', date("Y-m-d"), $filename);
+            $image->posY = '';
+            $image->posX = '';
+            $image->scale = '';
 
             /**
              * TODO: Save to the database ?
@@ -56,14 +64,14 @@ class ImageController extends Controller
              */
             $image->save();
 
-            return reponse()->json([
+            return response()->json([
                 "message" => "Image uploaded succesfully!"
             ]);
 
         }
 
 
-        return reponse()->json([
+        return response()->json([
             "message" => "There was no image selected!"
         ]);
 

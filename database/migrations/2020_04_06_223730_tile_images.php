@@ -18,8 +18,8 @@ class TileImages extends Migration
             $table->increments('id');
             $table->string('name');
             $table->mediumText('image');
-            $table->float('posX')->nallable();
-            $table->float('posY')->nallable();
+            $table->string('posX')->nallable();
+            $table->string('posY')->nallable();
             $table->string('scale')->nallable();
             $table->timestamps();
         });
