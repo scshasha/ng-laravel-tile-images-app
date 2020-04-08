@@ -22,6 +22,8 @@ You can setup your anguar app by using the following commands on your favourite 
 
 > npm install
 
+Update `./src/evironments/environmet.ts` with your `api` link.
+
 > ng serve
 
 Your app will be served on http://localhost:4200
@@ -63,7 +65,7 @@ DB migrations. Run:
 
 
 ### With Docker (Dev Desktop / Toolbox)
-The following setup is if you intend to run the Laravel api on a Docker setup.
+The following setup is if you intend to run the Laravel api on a Doker setup.
 
 #### Essential containers used:
 ```
