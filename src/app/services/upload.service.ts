@@ -12,7 +12,7 @@ export class UploadService {
   constructor(private http: HttpClient) { }
 
   upload(formData) {
-    return this.http.post<any>(this.URL, formData, {
+    return this.http.post(this.URL, formData, {
         reportProgress: true,
 		observe: 'events'
     });

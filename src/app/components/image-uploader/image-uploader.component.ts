@@ -27,13 +27,13 @@ export class ImageUploaderComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
-
-
-
-  isObject(objId) {
-    console.log("progress bar..");
-    // (typof this.files[j] == 'object')
+  isUploadingStatus(objId) {
+    if (typeof this.files[objId] == 'object') {
+      // check if we're uploading the image
+      if (this.files[objId].inProgress == true) {
+        return true;
+      }
+    }
 
     return false;
   }
@@ -42,8 +42,6 @@ export class ImageUploaderComponent implements OnInit {
 
     if (this.files[grid] == 'undefined') {
       return null;
-    } else {
-      console.log("showimg image title now...");
     }
 
     this.files.forEach(file => {
@@ -55,6 +53,8 @@ export class ImageUploaderComponent implements OnInit {
   }
 
 
+  
+  
   toggleTemplates(size: number): void {
     this.templateGrids = []; // Reset current layout.
 
@@ -69,9 +69,6 @@ export class ImageUploaderComponent implements OnInit {
 
       this.templateGrids.push(index); 
     }
-
-    console.log("resetting templay layput...", this.templateGrids);
-    console.log("resetting files...", this.files);
   }
 
 
@@ -92,7 +89,18 @@ export class ImageUploaderComponent implements OnInit {
   loadProgress(grid) {
 
     this.files.forEach(file => {
-      if ((file.inProgress == true) && (file.id == grid)) { return file.progress; }
+      file.inProgress = true;
+
+      console.log("checking progress...");
+
+
+      if ((file.id == grid)) { 
+
+        console.log("retuning " + file.progress + "%");
+
+        return file.progress;
+
+      }
     }); 
     
   }
@@ -103,20 +111,11 @@ export class ImageUploaderComponent implements OnInit {
 
     if (typeof this.imagePreviews[grid] == 'undefined') {
       return "https://via.placeholder.com/200.png";
-    } 
-    else {
-      console.log(typeof this.imagePreviews[grid]);
     }
 
     if (typeof this.imagePreviews[grid]['url'] == 'undefined') {
       return "https://via.placeholder.com/200.png";
     }
-    else {
-      console.log(typeof this.imagePreviews[grid]);
-    }
-
-    console.log('All image preview checks seem good.');
-
     return this.imagePreviews[grid]['url'];
 
   }
@@ -133,8 +132,6 @@ export class ImageUploaderComponent implements OnInit {
     let mimeType = file.type;
 
     if (mimeType.match(/image\/*/) == null) {
-
-      console.log("non image file selected...");
       return;
     }
 
@@ -145,12 +142,11 @@ export class ImageUploaderComponent implements OnInit {
       progress: 0, 
       id: grid, 
       uri: null, 
-      filename: file.name
+      filename: file.name,
+      uploaded: false,
     });
 
     this.imagePreviews[grid] = [];
-
-    // console.log(this.files);
 
     // Create a link to preview the image.
     let imgURL = null;
@@ -158,11 +154,7 @@ export class ImageUploaderComponent implements OnInit {
 
     reader.readAsDataURL(file);
     reader.onload = (event) => {
-      // console.log(reader.result);
       this.imagePreviews[grid]['url'] = reader.result;
-      // this.files[grid].uri = reader.result;
-      // console.log(this.files[grid].uri);
-      console.log(this.imagePreviews[grid]);
     }
 
     if (typeof this.files[grid] != 'undefined') {
@@ -191,12 +183,14 @@ export class ImageUploaderComponent implements OnInit {
     formData.append('file', file.data);
 
     file.inProgress = true;
+    this.files[file.id].inProgress = true; // file.progress;
 
     this.uploadService.upload(formData).pipe(
       map(event => {
         switch (event.type) {
           case HttpEventType.UploadProgress:
             file.progress = Math.round(event.loaded * 100 / event.total);
+            this.files[file.id].progress = file.progress;
             break;
           case HttpEventType.Response:
             return event;
@@ -206,9 +200,14 @@ export class ImageUploaderComponent implements OnInit {
       }),
       catchError((error: HttpErrorResponse) => {
         file.inProgress = false;
+        this.files[file.id].inProgress = false;
         return of(`${file.data.name} upload failed.`);
       })).subscribe((event: any) => {
+
       if (typeof (event) === 'object') {
+        if (event.status == 200) {
+          this.files[file.id].uploaded = true;
+        }
         console.log(event.body);
       }
     })
