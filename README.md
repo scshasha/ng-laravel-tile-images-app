@@ -16,7 +16,7 @@ You can setup your anguar app by using the following commands on your favourite 
 
 > git clone https://github.com/scshasha/ng-laravel-tile-images-app.git
 
-> git branch -b YOUR-BRANCH-NAME origin/angular-fe
+> git branch -b angular-fe origin/angular-fe
 
 > git pull origin angular-fe
 
