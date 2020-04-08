@@ -7,14 +7,14 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class UploadService {
-  URL: string = environment.API_URL;
+  URL: string = environment.API_URL + "image/store/";
 
   constructor(private http: HttpClient) { }
 
   upload(formData) {
     return this.http.post<any>(this.URL, formData, {
         reportProgress: true,
-	observe: 'events'
+		observe: 'events'
     });
   }
 }

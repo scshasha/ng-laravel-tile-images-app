@@ -14,183 +14,6 @@ import { catchError, map } from 'rxjs/operators';
 })
 export class ImageUploaderComponent implements OnInit {
 
-  // @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;files  = [];
-
-  layouTemplate: any = [0];
-  previewURL: any = null;
-  selecetdFiles: any = [];
-  file_selection_made = false;
-  fileData: File = null;
-
-  filesReadyToUpload: any = [];
-
-
-  constructor(private uploadService: UploadService) { }
-
-  ngOnInit(): void {
-  }
-
-  setGirdLayout(value) {
-    console.log(value);
-  }
-
-
-
-  
-  preview(grid_id) {
-
-  	grid_id = grid_id + 1;
-
-  	if (this.fileData == null) {
-  		return;
-  	}
-
-  	var mimeType = this.fileData.type;
-  	if (mimeType.match(/image\/*/) == null) {
-  		return;
-  	}
-
-  	console.log("mimeType passed!");
-
-  	var reader = new FileReader();
-  	reader.readAsDataURL(this.fileData);
-  	reader.onload = (_event) => {
-	  	this.selecetdFiles[grid_id]["file_preview"] = reader.result;
-	  	// this.previewURL = reader.result;
-  	}
-
-  	// = "https://placehold.co/6" + grid_id + "x4" + grid_id + "/random/random";//this.previewURL;
-
-    console.log("prviewing id:: ", grid_id);
-
-    this.selecetdFiles[grid_id]["file_preview"];
-  }
-
-  onFileSelected(fileInput: any, id: number) {
-
-  	this.file_selection_made = true;
-
-  	id = id + 1;
-
-
-  	let file_name = fileInput.target.files[0].name;
-  	this.fileData = <File>fileInput.target.files[0];
-
-  	this.selecetdFiles[id] = [];
-  	this.selecetdFiles[id]["file_id"] = id;
-  	this.selecetdFiles[id]["file_name"] = file_name;
-  	this.selecetdFiles[id]["file_data"] = this.fileData;
-
-  	var reader = new FileReader();
-  	reader.readAsDataURL(this.fileData);
-  	reader.onload = (_event) => {
-	  	this.selecetdFiles[id]["file_preview"] = reader.result;
-  	}
-
-  	// this.preview(id);
-
-  }
-
-
-  seectedFileName(grig_id: any) {
-
-  	if (this.selecetdFiles[grig_id]) {
-	  	return this.selecetdFiles[grig_id]["file_url"];
-  	}
-  }
-
-
-  tileColspan(value) {
-    switch(this.layouTemplate.length) {
-      case 3:
-        switch(value) {
-          case 0:
-            return 2;
-            break;
-        }
-        break;
-    }
-
-    return 1;
-  }
-
-
-  tileRowSpan(value) {
-    switch(this.layouTemplate.length) {
-      case 3:
-        if (value == 0) {
-          return 2;
-        }
-        break;
-      case 2:
-        if (value == 0 || value == 1) {
-          return 2;
-        }
-        break;
-    }
-
-    return 1;
-  }
-
-
-
-
-  makeURL(event) {
-
-    let imgWeight = 300;
-    let imgHeight = 300;
-
-    event = event + 1;
-
-  	if(this.file_selection_made) {
-  		for(let i=0; i < this.selecetdFiles.length;i++) {
-  			if (typeof this.selecetdFiles[event] == "undefined") {
-  				return "https://via.placeholder.com/"+imgWeight+"x"+imgHeight+".png?text=Select%20an%20image%20to%20upload.";
-  			}
-  			if (this.selecetdFiles[event]["file_id"] == event) {
-  				if (this.selecetdFiles[event]["file_preview"] != 'undefined') {
-  					return this.selecetdFiles[event]["file_preview"];
-  				}
-  			}
-
-  		}
-  	}
-  	return "https://via.placeholder.com/"+imgWeight+"x"+imgHeight+".png?text=Select%20an%20image%20to%20upload.";
-  }
-
-
-
-  getGridClasses() {
-    switch(this.layouTemplate.length) {
-      case 1:
-        return 'part-of-one';
-        break;
-      case 2:
-        return 'part-of-two';
-        break;
-      case 3:
-        return 'part-of-three';
-        break;
-    }
-  }
-
-
-  gridLayout(event) {
-
-	this.layouTemplate = []; // Hack to reset the grid template array
-
-  	for(let x=0;x<event;x++) {
-  		this.layouTemplate.push(x);
-  	}
-
-
-
-  }
-
-
-
-
-
 
   imagePreviews:  any = [];
   files:          any = [];
@@ -198,6 +21,22 @@ export class ImageUploaderComponent implements OnInit {
   // Empty staring array to comtrol switching between grid view layputs.
   templateGrids:  any = [""];
 
+
+  constructor(private uploadService: UploadService) { }
+
+  ngOnInit(): void {
+  }
+
+
+
+
+
+  isObject(objId) {
+    console.log("progress bar..");
+    // (typof this.files[j] == 'object')
+
+    return false;
+  }
 
   selectedfileTitle(grid) {
 
@@ -339,6 +178,7 @@ export class ImageUploaderComponent implements OnInit {
   uploadFiles() {
     this.files.forEach(file => {
       this.uploadFile(file);
+      console.log('uploading ' + file.id);
     });
   }
 

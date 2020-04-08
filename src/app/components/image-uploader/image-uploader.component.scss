@@ -38,10 +38,34 @@
   		display: block;
   		width: 100%;
   		height: 100%;
-  		/*filter: brightness(0.6);*/
-		/*transition: all 0.3s cubic-bezier(0.445, 0.05, 0.55, 0.95);*/
 		transform: scale(1);
   	}
+
+    & .grid-item-header {
+      > div {
+        position: relative; 
+        width: 100%; 
+        height: 30px; 
+        line-height: 30px; 
+        border: 1px solid #212529;
+        background: #212529;
+        cursor:pointer;
+        text-align: center;
+        color: #eee; 
+      }
+
+      & input[type='file'] {
+        opacity: 0.0; 
+        position: absolute; 
+        top:0; 
+        left: 0; 
+        bottom: 0; 
+        right:0; 
+        width: 100%; 
+        height:100%;
+        cursor:pointer;
+      }
+    }
   }
 }
 
