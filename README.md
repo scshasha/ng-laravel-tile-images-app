@@ -1,6 +1,5 @@
 # Angular + Laravel Sample App
 
-
 ## Basic Requirements
 
 * [Angular work environment](https://angular.io/guide/setup-local)
@@ -15,11 +14,17 @@ The setup guide assumes that you have the obove requirements. I will be using Do
 
 You can setup your anguar app by using the following commands on your favourite terminal:
 
-* `git clone https://github.com/scshasha/ng-laravel-tile-images-app.git`
-* `git branch -b YOUR-BRANCH-NAME origin/angular-fe`
-* `git pull origin angular-fe`
-* `npm install`
-* `ng serve`
+> git clone https://github.com/scshasha/ng-laravel-tile-images-app.git
+
+> git branch -b YOUR-BRANCH-NAME origin/angular-fe
+
+> git pull origin angular-fe
+
+> npm install
+
+> ng serve
+
+Your app will be served on http://localhost:4200
 
 
 
