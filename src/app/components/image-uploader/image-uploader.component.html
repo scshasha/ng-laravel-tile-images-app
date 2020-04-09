@@ -15,7 +15,7 @@
 					<div class="progress" *ngIf="isUploadingStatus(j)">
 					  <div class="progress-bar" role="progressbar" [style.width.%]="this.files[j].progress" aria-valuemin="0" aria-valuemax="100">
 
-					  {{ (this.files[j].uploaded != true) ? 'Uploading image... (' + this.files[j].progress + '%)' : 'Image uploaded! (' + this.files[j].progress + ')' }}
+					  {{ (this.files[j].uploaded != true) ? 'Uploading image... (' + this.files[j].progress + '%)' : 'Image uploaded! (' + this.files[j].progress + '%)' }}
 
 					</div>
 					</div>
