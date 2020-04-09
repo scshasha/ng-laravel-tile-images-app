@@ -46,7 +46,7 @@ class ImageController extends Controller
             $file = $request->file("file");
             $ext   = $file->getClientOriginalExtension();
 
-            $filename    = sprintf('%s%s.%s',date('His'), time(), strtolower($ext));
+            $filename    = sprintf('%s%s%s.%s',date('His'), time(), rand(), strtolower($ext));
             $file->move('uploads/'.date("Y-m-d")."/", $filename);
 
 
