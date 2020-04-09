@@ -46,13 +46,13 @@ class ImageController extends Controller
             $file = $request->file("file");
             $ext   = $file->getClientOriginalExtension();
 
-            $filename    = sprintf('%s-%s-%s.',date('His'), time(), $ext);
+            $filename    = sprintf('%s%s.%s',date('His'), time(), strtolower($ext));
             $file->move('uploads/'.date("Y-m-d")."/", $filename);
 
 
              // = str_replace(".{$ext}", "", $file->getOriginalName());
             $image->name = $filename;
-            $image->image = sprintf('uploads/%s/%s/', date("Y-m-d"), $filename);
+            $image->image = sprintf('uploads/%s/%s', date("Y-m-d"), $filename);
             $image->posY = '';
             $image->posX = '';
             $image->scale = '';
