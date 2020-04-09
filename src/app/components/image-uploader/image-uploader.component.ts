@@ -3,9 +3,9 @@ import { HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 import { UploadService } from '../../services/upload.service';
-
 import { of } from 'rxjs';  
 import { catchError, map } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-image-uploader',
@@ -18,13 +18,19 @@ export class ImageUploaderComponent implements OnInit {
   imagePreviews:  any = [];
   files:          any = [];
   filesInput:     any = [];
+  uploadedFiles: any = [];
   // Empty staring array to comtrol switching between grid view layputs.
   templateGrids:  any = [""];
+
+  base_url: string = environment.BASE_URL;
 
 
   constructor(private uploadService: UploadService) { }
 
   ngOnInit(): void {
+
+    this.getUploaded();
+
   }
 
   isUploadingStatus(objId) {
@@ -53,8 +59,8 @@ export class ImageUploaderComponent implements OnInit {
   }
 
 
-  
-  
+
+
   toggleTemplates(size: number): void {
     this.templateGrids = []; // Reset current layout.
 
@@ -170,18 +176,21 @@ export class ImageUploaderComponent implements OnInit {
   uploadFiles() {
     this.files.forEach(file => {
       this.uploadFile(file);
-      console.log('uploading ' + file.id);
+      // console.log('uploading ' + file.id);
     });
+    // this.files = [];
   }
 
   // Makes a subscription call to the service to
   // do the image post to the provided URL
   // see upload.service.
   uploadFile(file) {
-    const formData = new FormData();
+    let formData = new FormData();
 
-    formData.append('file', file.data);
 
+    formData.append('file', this.files[file.id].data);
+
+    console.log(formData);
     file.inProgress = true;
     this.files[file.id].inProgress = true; // file.progress;
 
@@ -207,10 +216,25 @@ export class ImageUploaderComponent implements OnInit {
       if (typeof (event) === 'object') {
         if (event.status == 200) {
           this.files[file.id].uploaded = true;
+
+          // update uploaded files for display.
+          this.getUploaded();
         }
         console.log(event.body);
       }
     })
+  }
+  getUploaded() {
+
+    this.uploadService.get().subscribe((res: any) => {
+
+      if (typeof res === 'object') {
+        console.log(res);
+        this.uploadedFiles = res;
+      } else {
+        console.log("no images uploaded as YET");
+      }
+    });
   }
 
 } // End.

@@ -29,6 +29,20 @@
 			<!-- //#end grid-list -->
 		</div>
 	</div>
+
+	<div class="row">
+		<div class="container" *ngIf="(this.uploadedFiles[0])">
+			<h3 class="font-weight-light text-center mt-4 mb-0">Recent Uploads</h3>
+			<hr class="mt-2 mb-5 w-100" />
+			<div class="row text-center">
+				<div class="col-lg-3 col-md-4 col-6" *ngFor="item of this.uploadedFiles; let x = index;">
+					<a href="#" class="d-block mb-4 h-100">
+						<img class="img-fluid img-thumbnail" [src]="this.base_url+'/'+uploadedFiles[x].image" alt="" />
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <app-footer></app-footer>
